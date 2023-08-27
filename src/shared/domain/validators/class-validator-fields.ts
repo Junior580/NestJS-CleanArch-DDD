@@ -9,7 +9,7 @@ export abstract class ClassValidatorFields<PropsValidated>
 {
   errors: FieldsError = null;
 
-  validatedDate: PropsValidated = null;
+  validatedData: PropsValidated = null;
 
   validate(data: any): boolean {
     const errors = validateSync(data);
@@ -21,7 +21,7 @@ export abstract class ClassValidatorFields<PropsValidated>
         this.errors[field] = Object.values(error.constraints);
       }
     } else {
-      this.validatedDate = data;
+      this.validatedData = data;
     }
 
     return !errors.length;
