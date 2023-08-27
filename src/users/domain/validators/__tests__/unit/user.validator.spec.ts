@@ -4,16 +4,18 @@ import {
   UserValidator,
   UserValidatorFactory,
 } from '../../user.validator';
+import { UserProps } from '@/users/domain/entities/user.entity';
 
 let sut: UserValidator;
+let props: UserProps;
 
 describe('User validator unit tests', () => {
   beforeEach(() => {
     sut = UserValidatorFactory.create();
+    props = UserDataBuilder({});
   });
 
   it('Valid case for name field', () => {
-    const props = UserDataBuilder({});
     const isValid = sut.validate(props);
 
     expect(isValid).toBeTruthy();
@@ -45,14 +47,6 @@ describe('User validator unit tests', () => {
     expect(sut.errors['name']).toStrictEqual([
       'name must be shorter than or equal to 255 characters',
     ]);
-  });
-
-  it('Valid case for email field', () => {
-    const props = UserDataBuilder({});
-    const isValid = sut.validate(props);
-
-    expect(isValid).toBeTruthy();
-    expect(sut.validatedData).toStrictEqual(new UserRules(props));
   });
 
   it('Invalidation cases for email field', () => {
@@ -91,14 +85,6 @@ describe('User validator unit tests', () => {
     ]);
   });
 
-  it('Valid case for name field', () => {
-    const props = UserDataBuilder({});
-    const isValid = sut.validate(props);
-
-    expect(isValid).toBeTruthy();
-    expect(sut.validatedData).toStrictEqual(new UserRules(props));
-  });
-
   it('Invalidation cases for password field', () => {
     let isValid = sut.validate(null as any);
     expect(isValid).toBeFalsy();
@@ -128,6 +114,20 @@ describe('User validator unit tests', () => {
     expect(isValid).toBeFalsy();
     expect(sut.errors['password']).toStrictEqual([
       'password must be shorter than or equal to 100 characters',
+    ]);
+  });
+
+  it('Invalidation cases for createdAt field', () => {
+    let isValid = sut.validate({ ...props, createdAt: 1 as any });
+    expect(isValid).toBeFalsy();
+    expect(sut.errors['createdAt']).toStrictEqual([
+      'createdAt must be a Date instance',
+    ]);
+
+    isValid = sut.validate({ ...props, createdAt: '2023' as any });
+    expect(isValid).toBeFalsy();
+    expect(sut.errors['createdAt']).toStrictEqual([
+      'createdAt must be a Date instance',
     ]);
   });
 });
