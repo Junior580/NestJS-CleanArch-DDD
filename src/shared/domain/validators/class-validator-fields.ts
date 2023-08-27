@@ -13,6 +13,7 @@ export abstract class ClassValidatorFields<PropsValidated>
 
   validate(data: any): boolean {
     const errors = validateSync(data);
+
     if (errors.length) {
       this.errors = {};
       for (const error of errors) {
@@ -22,6 +23,7 @@ export abstract class ClassValidatorFields<PropsValidated>
     } else {
       this.validatedDate = data;
     }
+
     return !errors.length;
   }
 }

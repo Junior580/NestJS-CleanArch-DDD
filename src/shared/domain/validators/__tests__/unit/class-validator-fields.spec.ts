@@ -29,4 +29,23 @@ describe('Class validator fields tests', () => {
     expect(sut.validatedDate).toBeNull();
     expect(sut.errors).toStrictEqual({ field: ['test error'] });
   });
+
+  it('Should initialize errors and validatedData variables with null', () => {
+    const sut = new StubClassValidatorFields();
+
+    expect(sut.errors).toBeNull();
+    expect(sut.validatedDate).toBeNull();
+  });
+
+  it('Should validate without errors', () => {
+    const spyValidateSync = jest.spyOn(libClassValidator, 'validateSync');
+
+    spyValidateSync.mockReturnValue([]);
+    const sut = new StubClassValidatorFields();
+
+    expect(sut.validate({ field: 'value' })).toBeTruthy();
+    expect(spyValidateSync).toHaveBeenCalled();
+    expect(sut.validatedDate).toStrictEqual({ field: 'value' });
+    expect(sut.errors).toBeNull();
+  });
 });
