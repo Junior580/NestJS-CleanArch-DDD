@@ -2,15 +2,17 @@ import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builde
 import { UserEntity, UserProps } from '../../user.entity';
 
 describe('User entity unit test', () => {
-  let props: UserProps;
   let sut: UserEntity;
+  let props: UserProps;
 
   beforeEach(() => {
-    props = UserDataBuilder({});
+    UserEntity.validate = jest.fn();
     sut = new UserEntity(props);
+    props = UserDataBuilder({});
   });
 
   it('constructor method', () => {
+    // expect(UserEntity.validate).toHaveBeenCalled();
     expect(sut.props.name).toBe(props.name);
     expect(sut.props.email).toBe(props.email);
     expect(sut.props.password).toBe(props.password);
@@ -53,11 +55,13 @@ describe('User entity unit test', () => {
   });
 
   it('should update an user', () => {
+    // expect(UserEntity.validate).toHaveBeenCalled();
     sut.update('other name');
     expect(sut.props.name).toEqual('other name');
   });
 
   it('should update an password', () => {
+    // expect(UserEntity.validate).toHaveBeenCalled();
     sut.updatePassword('other password');
     expect(sut.props.password).toEqual('other password');
   });
