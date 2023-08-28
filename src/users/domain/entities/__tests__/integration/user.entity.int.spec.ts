@@ -41,6 +41,7 @@ describe('User entity integration tests', () => {
         new UserEntity(props);
       }).toThrowError(EntityValidationError);
     });
+
     it('Should throw an error when creating an user within invalid email', () => {
       let props: UserProps = {
         ...UserDataBuilder({}),
@@ -72,6 +73,64 @@ describe('User entity integration tests', () => {
       props = {
         ...UserDataBuilder({}),
         email: 1 as any,
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+    });
+
+    it('Should throw an error when creating an user within invalid password', () => {
+      let props: UserProps = {
+        ...UserDataBuilder({}),
+        password: null,
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: '',
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: 'a'.repeat(101),
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: 1 as any,
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+    });
+
+    it('Should throw an error when creating an user within invalid createdAt', () => {
+      let props: UserProps = {
+        ...UserDataBuilder({}),
+        createdAt: '2023' as any,
+      };
+
+      expect(() => {
+        new UserEntity(props);
+      }).toThrowError(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        createdAt: 1 as any,
       };
 
       expect(() => {
