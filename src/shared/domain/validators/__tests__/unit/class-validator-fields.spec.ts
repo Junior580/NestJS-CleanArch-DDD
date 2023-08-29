@@ -10,7 +10,7 @@ describe('Class validator fields tests', () => {
     const sut = new StubClassValidatorFields();
 
     expect(sut.errors).toBeNull();
-    expect(sut.validatedDate).toBeNull();
+    expect(sut.validatedData).toBeNull();
   });
 
   it('Should validate if errors', () => {
@@ -26,7 +26,7 @@ describe('Class validator fields tests', () => {
 
     expect(sut.validate(null)).toBeFalsy();
     expect(spyValidateSync).toHaveBeenCalled();
-    expect(sut.validatedDate).toBeNull();
+    expect(sut.validatedData).toBeNull();
     expect(sut.errors).toStrictEqual({ field: ['test error'] });
   });
 
@@ -34,7 +34,7 @@ describe('Class validator fields tests', () => {
     const sut = new StubClassValidatorFields();
 
     expect(sut.errors).toBeNull();
-    expect(sut.validatedDate).toBeNull();
+    expect(sut.validatedData).toBeNull();
   });
 
   it('Should validate without errors', () => {
@@ -45,7 +45,7 @@ describe('Class validator fields tests', () => {
 
     expect(sut.validate({ field: 'value' })).toBeTruthy();
     expect(spyValidateSync).toHaveBeenCalled();
-    expect(sut.validatedDate).toStrictEqual({ field: 'value' });
+    expect(sut.validatedData).toStrictEqual({ field: 'value' });
     expect(sut.errors).toBeNull();
   });
 });

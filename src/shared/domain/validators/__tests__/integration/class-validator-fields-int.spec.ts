@@ -49,7 +49,7 @@ describe('Class validator integration tests', () => {
         price: 1,
       }),
     ).toBeTruthy();
-    expect(validator.validatedDate).toStrictEqual(
+    expect(validator.validatedData).toStrictEqual(
       new StubRules({
         name: 'value',
         price: 1,

@@ -2,17 +2,17 @@ import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builde
 import { UserEntity, UserProps } from '../../user.entity';
 
 describe('User entity unit test', () => {
-  let sut: UserEntity;
   let props: UserProps;
+  let sut: UserEntity;
 
   beforeEach(() => {
     UserEntity.validate = jest.fn();
-    sut = new UserEntity(props);
     props = UserDataBuilder({});
+    sut = new UserEntity(props);
   });
 
   it('constructor method', () => {
-    // expect(UserEntity.validate).toHaveBeenCalled();
+    expect(UserEntity.validate).toHaveBeenCalled();
     expect(sut.props.name).toBe(props.name);
     expect(sut.props.email).toBe(props.email);
     expect(sut.props.password).toBe(props.password);
