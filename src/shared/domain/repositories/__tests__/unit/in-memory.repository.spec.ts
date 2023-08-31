@@ -64,4 +64,17 @@ describe('Repository unit tests', () => {
     await sut.update(updatedEntity);
     expect(updatedEntity.toJSON()).toStrictEqual(sut.items[0].toJSON());
   });
+
+  it('Should be to throw new error when entity not found', async () => {
+    await expect(sut.delete('fakeID')).rejects.toThrow(
+      new NotFoundError('Entity not found.'),
+    );
+  });
+
+  it('Should be able to delete an entity', async () => {
+    const entity = new StubEntity({ name: 'user1', price: 1 });
+    await sut.insert(entity);
+    await sut.delete(entity._id);
+    expect(sut.items).toHaveLength(0);
+  });
 });
