@@ -45,4 +45,23 @@ describe('Repository unit tests', () => {
 
     expect([entity]).toStrictEqual(result);
   });
+
+  it('Should be able to throw on failed update when entity not found', async () => {
+    const entity = new StubEntity({ name: 'user1', price: 1 });
+
+    await expect(sut.update(entity)).rejects.toThrow(
+      new NotFoundError('Entity not found.'),
+    );
+  });
+
+  it('Should be able to update an entity', async () => {
+    const entity = new StubEntity({ name: 'user1', price: 1 });
+    await sut.insert(entity);
+    const updatedEntity = new StubEntity(
+      { name: 'user2', price: 2 },
+      entity._id,
+    );
+    await sut.update(updatedEntity);
+    expect(updatedEntity.toJSON()).toStrictEqual(sut.items[0].toJSON());
+  });
 });
