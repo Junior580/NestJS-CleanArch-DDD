@@ -37,4 +37,12 @@ describe('Repository unit tests', () => {
 
     expect(entity.toJSON()).toStrictEqual(result.toJSON());
   });
+
+  it('Should be able to return all entities', async () => {
+    const entity = new StubEntity({ name: 'user1', price: 1 });
+    await sut.insert(entity);
+    const result = await sut.findAll();
+
+    expect([entity]).toStrictEqual(result);
+  });
 });
