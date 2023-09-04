@@ -1,5 +1,5 @@
 import { Entity } from '../entities/entity';
-import { NotFoundError } from '../errors/not-found-errors';
+import { NotFoundError } from '../errors/not-found-error';
 import { RepositoryInterface } from './repository-contracts';
 
 export abstract class InMemoryRepository<E extends Entity>
@@ -21,14 +21,12 @@ export abstract class InMemoryRepository<E extends Entity>
 
   async update(entity: any): Promise<void> {
     await this._get(entity.id);
-    // const index = this.items.findIndex(item => item.id === entity.id);
     const index = await this._findIndex(entity.id);
     this.items[index] = entity;
   }
 
   async delete(id: string): Promise<void> {
     await this._get(id);
-    // const index = this.items.findIndex(item => item.id === id);
     const index = await this._findIndex(id);
 
     this.items.splice(index, 1);
