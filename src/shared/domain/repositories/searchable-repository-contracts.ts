@@ -11,7 +11,6 @@ export type SearchProps<Filter = string> = {
   filter?: Filter | null;
 };
 
-<<<<<<< HEAD
 export type SearchResultProps<E extends Entity, Filter> = {
   items: E[];
   total: number;
@@ -22,8 +21,6 @@ export type SearchResultProps<E extends Entity, Filter> = {
   filter: Filter | null;
 };
 
-=======
->>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
 export class SearchParams {
   protected _page: number;
   protected _perPage = 15;
@@ -31,24 +28,15 @@ export class SearchParams {
   protected _sortDir: SortDirection | null;
   protected _filter: string | null;
 
-<<<<<<< HEAD
   constructor(props: SearchProps = {}) {
     this.page = props.page;
     this.perPage = props.perPage;
     this.sort = props.sort;
     this.sortDir = props.sortDir;
     this.filter = props.filter;
-=======
-  constructor(props: SearchProps) {
-    this._page = props.page;
-    this._perPage = props.perPage;
-    this._sort = props.sort;
-    this._sortDir = props.sortDir;
-    this._filter = props.filter;
->>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
   }
 
-  get page(): number {
+  get page() {
     return this._page;
   }
 
@@ -57,21 +45,15 @@ export class SearchParams {
     if (Number.isNaN(_page) || _page <= 0 || parseInt(_page as any) !== _page) {
       _page = 1;
     }
-
     this._page = _page;
   }
 
-  get perPage(): number {
+  get perPage() {
     return this._perPage;
   }
 
   private set perPage(value: number) {
-<<<<<<< HEAD
     let _perPage = value === (true as any) ? this._perPage : +value;
-=======
-    let _perPage = +value;
->>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
-
     if (
       Number.isNaN(_perPage) ||
       _perPage <= 0 ||
@@ -79,11 +61,10 @@ export class SearchParams {
     ) {
       _perPage = this._perPage;
     }
-
     this._perPage = _perPage;
   }
 
-  get sort(): string {
+  get sort() {
     return this._sort;
   }
 
@@ -92,22 +73,20 @@ export class SearchParams {
       value === null || value === undefined || value === '' ? null : `${value}`;
   }
 
-  get sortDir(): string {
+  get sortDir() {
     return this._sortDir;
   }
 
-  private set sortDir(value: SortDirection) {
-    if (!this._sort) {
+  private set sortDir(value: string | null) {
+    if (!this.sort) {
       this._sortDir = null;
       return;
     }
-
     const dir = `${value}`.toLowerCase();
-
     this._sortDir = dir !== 'asc' && dir !== 'desc' ? 'desc' : dir;
   }
 
-  get filter(): string {
+  get filter() {
     return this._filter;
   }
 
@@ -117,7 +96,6 @@ export class SearchParams {
   }
 }
 
-<<<<<<< HEAD
 export class SearchResult<E extends Entity, Filter = string> {
   readonly items: E[];
   readonly total: number;
@@ -127,6 +105,7 @@ export class SearchResult<E extends Entity, Filter = string> {
   readonly sort: string | null;
   readonly sortDir: string | null;
   readonly filter: Filter | null;
+
   constructor(props: SearchResultProps<E, Filter>) {
     this.items = props.items;
     this.total = props.total;
@@ -159,12 +138,4 @@ export interface SearchableRepositoryInterface<
   SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
   search(props: SearchInput): Promise<SearchOutput>;
-=======
-export interface SearchableRepositoryInterface<
-  E extends Entity,
-  SearchInput,
-  SearchOutput,
-> extends RepositoryInterface<E> {
-  search(props: SearchParams): Promise<SearchOutput>;
->>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
 }
