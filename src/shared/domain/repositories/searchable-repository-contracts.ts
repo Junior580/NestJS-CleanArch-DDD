@@ -11,6 +11,7 @@ export type SearchProps<Filter = string> = {
   filter?: Filter | null;
 };
 
+<<<<<<< HEAD
 export type SearchResultProps<E extends Entity, Filter> = {
   items: E[];
   total: number;
@@ -21,6 +22,8 @@ export type SearchResultProps<E extends Entity, Filter> = {
   filter: Filter | null;
 };
 
+=======
+>>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
 export class SearchParams {
   protected _page: number;
   protected _perPage = 15;
@@ -28,12 +31,21 @@ export class SearchParams {
   protected _sortDir: SortDirection | null;
   protected _filter: string | null;
 
+<<<<<<< HEAD
   constructor(props: SearchProps = {}) {
     this.page = props.page;
     this.perPage = props.perPage;
     this.sort = props.sort;
     this.sortDir = props.sortDir;
     this.filter = props.filter;
+=======
+  constructor(props: SearchProps) {
+    this._page = props.page;
+    this._perPage = props.perPage;
+    this._sort = props.sort;
+    this._sortDir = props.sortDir;
+    this._filter = props.filter;
+>>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
   }
 
   get page(): number {
@@ -54,7 +66,11 @@ export class SearchParams {
   }
 
   private set perPage(value: number) {
+<<<<<<< HEAD
     let _perPage = value === (true as any) ? this._perPage : +value;
+=======
+    let _perPage = +value;
+>>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
 
     if (
       Number.isNaN(_perPage) ||
@@ -101,6 +117,7 @@ export class SearchParams {
   }
 }
 
+<<<<<<< HEAD
 export class SearchResult<E extends Entity, Filter = string> {
   readonly items: E[];
   readonly total: number;
@@ -142,4 +159,12 @@ export interface SearchableRepositoryInterface<
   SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
   search(props: SearchInput): Promise<SearchOutput>;
+=======
+export interface SearchableRepositoryInterface<
+  E extends Entity,
+  SearchInput,
+  SearchOutput,
+> extends RepositoryInterface<E> {
+  search(props: SearchParams): Promise<SearchOutput>;
+>>>>>>> b06d353ddd12893135f3aa99825e5fa77d782e98
 }
