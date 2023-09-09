@@ -32,8 +32,42 @@ describe('Repository unit tests', () => {
     sut = new StubInMemorySearchableRepository();
   });
 
-  describe('apply filter method', () => {});
+  describe('apply filter method', () => {
+    it('should no filter items when filter params is null', async () => {
+      const items = [new StubEntity({ name: 'user1', price: 50 })];
+      const spyFilterMethod = jest.spyOn(items, 'filter');
+      const itemsFiltered = await sut['applyFilter'](items, null);
+      expect(itemsFiltered).toStrictEqual(items);
+      expect(spyFilterMethod).not.toHaveBeenCalled();
+    });
+
+    it('should filter using a filter param', async () => {
+      const items = [
+        new StubEntity({ name: 'user2', price: 50 }),
+        new StubEntity({ name: 'USER2', price: 50 }),
+        new StubEntity({ name: 'fake', price: 50 }),
+      ];
+      const spyFilterMethod = jest.spyOn(items, 'filter');
+      let itemsFiltered = await sut['applyFilter'](items, 'USER2');
+
+      expect(itemsFiltered).toStrictEqual([items[0], items[1]]);
+      expect(spyFilterMethod).toHaveBeenCalledTimes(1);
+
+      itemsFiltered = await sut['applyFilter'](items, 'user2');
+
+      expect(itemsFiltered).toStrictEqual([items[0], items[1]]);
+      expect(spyFilterMethod).toHaveBeenCalledTimes(2);
+
+      itemsFiltered = await sut['applyFilter'](items, 'no filter');
+
+      expect(itemsFiltered).toHaveLength(0);
+      expect(spyFilterMethod).toHaveBeenCalledTimes(3);
+    });
+  });
+
   describe('apply sort method', () => {});
+
   describe('apply paginate method', () => {});
+
   describe('search method', () => {});
 });
