@@ -94,7 +94,29 @@ describe('Repository unit tests', () => {
     });
   });
 
-  describe('apply paginate method', () => {});
+  describe('apply paginate method', () => {
+    it('should  paginate items', async () => {
+      const items = [
+        new StubEntity({ name: 'a', price: 50 }),
+        new StubEntity({ name: 'b', price: 50 }),
+        new StubEntity({ name: 'c', price: 50 }),
+        new StubEntity({ name: 'd', price: 50 }),
+        new StubEntity({ name: 'e', price: 50 }),
+      ];
+
+      let itemsSorted = await sut['applyPaginate'](items, 1, 2);
+      expect(itemsSorted).toStrictEqual([items[0], items[1]]);
+
+      itemsSorted = await sut['applyPaginate'](items, 2, 2);
+      expect(itemsSorted).toStrictEqual([items[2], items[3]]);
+
+      itemsSorted = await sut['applyPaginate'](items, 3, 2);
+      expect(itemsSorted).toStrictEqual([items[4]]);
+
+      itemsSorted = await sut['applyPaginate'](items, 4, 2);
+      expect(itemsSorted).toStrictEqual([]);
+    });
+  });
 
   describe('search method', () => {});
 });
